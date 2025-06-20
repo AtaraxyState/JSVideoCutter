@@ -1,6 +1,6 @@
 {
     "name":  "videocutter-electron",
-    "version":  "1.0.0",
+    "version":  "0.1.0",
     "description":  "A modern video cutting application built with Electron and React",
     "main":  "build/electron.js",
     "scripts":  {
@@ -13,7 +13,10 @@
                     "test":  "react-scripts test",
                     "eject":  "react-scripts eject",
                     "build-electron":  "tsc -p tsconfig.electron.json",
-                    "dist":  "npm run build \u0026\u0026 npm run build-electron \u0026\u0026 electron-builder --publish=never"
+                    "dist":  "npm run build \u0026\u0026 npm run build-electron \u0026\u0026 electron-builder --publish=never",
+                    "electron:build:win":  "npm run build \u0026\u0026 npm run build-electron \u0026\u0026 electron-builder --win --publish=never",
+                    "electron:build:mac":  "npm run build \u0026\u0026 npm run build-electron \u0026\u0026 electron-builder --mac --publish=never",
+                    "electron:build:linux":  "npm run build \u0026\u0026 npm run build-electron \u0026\u0026 electron-builder --linux --publish=never"
                 },
     "build":  {
                   "appId":  "com.videocutter.app",
@@ -26,19 +29,59 @@
                             ],
                   "directories":  {
                                       "buildResources":  "assets",
-                                      "output":  "dist-portable"
+                                      "output":  "dist"
                                   },
                   "win":  {
                               "target":  [
+                                             {
+                                                 "target":  "nsis",
+                                                 "arch":  [
+                                                              "x64"
+                                                          ]
+                                             },
                                              {
                                                  "target":  "portable",
                                                  "arch":  [
                                                               "x64"
                                                           ]
                                              }
-                                         ],
-                              "icon":  "assets/icon.ico"
+                                         ]
                           },
+                  "mac":  {
+                              "target":  [
+                                             {
+                                                 "target":  "dmg",
+                                                 "arch":  [
+                                                              "x64",
+                                                              "arm64"
+                                                          ]
+                                             }
+                                         ],
+                              "category":  "public.app-category.video"
+                          },
+                  "linux":  {
+                                "target":  [
+                                               {
+                                                   "target":  "AppImage",
+                                                   "arch":  [
+                                                                "x64"
+                                                            ]
+                                               },
+                                               {
+                                                   "target":  "deb",
+                                                   "arch":  [
+                                                                "x64"
+                                                            ]
+                                               },
+                                               {
+                                                   "target":  "rpm",
+                                                   "arch":  [
+                                                                "x64"
+                                                            ]
+                                               }
+                                           ],
+                                "category":  "AudioVideo"
+                            },
                   "portable":  {
                                    "artifactName":  "VideoCutter-Portable.exe"
                                }
